@@ -1,0 +1,35 @@
+create table NHACUNGCAP (
+	MaNhaCC varchar(6) primary key check (MaNhaCC not like 'NCC%'),
+	TenNhaCC nvarchar(255) not null,
+	DiaChi nvarchar(255),
+	SoDT varchar(15) check(SoDT not like '%[^0-9]%'),
+	MaSoThue varchar(100) not null unique
+);
+
+create table LOAIDICHVU (
+	MaLoaiDV varchar(4) primary key check (MaLoaiDV not like 'DV%'),
+	TenLoaiDV nvarchar(255) not null
+);
+
+create table MUCPHI (
+	MaMP varchar(4) primary key check (MaMP not like 'MP%'),
+	DonGia int not null,
+	MoTa nvarchar(255) not null
+);
+
+create table DONGXE (
+	DongXe varchar(15) primary key,
+	HangXe varchar(15) not null,
+	SoChoNgoi int not null
+);
+
+create table DANGKYCUNGCAP (
+	MaDKCC varchar(5) primary key check (MaDKCC not like 'DK%'),
+	iMaNhaCC varchar(6) foreign key references NHACUNGCAP(MaNhaCC),
+	iMaLoaiDV varchar(4) foreign key references LOAIDICHVU(MaLoaiDV),
+	iDongXe varchar(15) foreign key references DONGXE(DongXe),
+	iMaMP varchar(4) foreign key references MUCPHI(MaMP),
+	NgayBatDauCungCap date not null,
+	NgayKetThucCungCap date not null,
+	SoLuongXeDangKy int not null check(SoLuongXeDangKy >=0) default 1
+);
