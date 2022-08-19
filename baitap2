@@ -1,1 +1,20 @@
 
+drop table
+
+create table CUSTOMER1 (
+
+);
+
+create table ORDER1 (
+	Id int primary key identity(1,1),
+);
+
+create table PRODUCT1(
+	Id int primary key identity(1,1),
+	Name nvarchar(255) not null,
+	Descr nvarchar(255) not null,
+	Unit nvarchar(10) not null check (Unit like '%Chiếc%'),
+	Price decimal(16,0) not null,
+	Amount int,
+	Total decimal(16,0),
+);
