@@ -1,5 +1,11 @@
+drop table NHACUNGCAP;
+drop table LOAIDICHVU;
+drop table MUCPHI;
+drop table DONGXE;
+drop table DANGKYCUNGCAP;
+
 create table NHACUNGCAP (
-	MaNhaCC varchar(6) primary key check (MaNhaCC not like 'NCC%'),
+	MaNhaCC varchar(6) primary key check (MaNhaCC like 'NCC%'),
 	TenNhaCC nvarchar(255) not null,
 	DiaChi nvarchar(255),
 	SoDT varchar(15) check(SoDT not like '%[^0-9]%'),
@@ -7,13 +13,13 @@ create table NHACUNGCAP (
 );
 
 create table LOAIDICHVU (
-	MaLoaiDV varchar(4) primary key check (MaLoaiDV not like 'DV%'),
+	MaLoaiDV varchar(4) primary key check (MaLoaiDV like 'DV%'),
 	TenLoaiDV nvarchar(255) not null
 );
 
 create table MUCPHI (
-	MaMP varchar(4) primary key check (MaMP not like 'MP%'),
-	DonGia int not null,
+	MaMP varchar(4) primary key check (MaMP like 'MP%'),
+	DonGia decimal(16,0) not null,
 	MoTa nvarchar(255) not null
 );
 
@@ -24,12 +30,71 @@ create table DONGXE (
 );
 
 create table DANGKYCUNGCAP (
-	MaDKCC varchar(5) primary key check (MaDKCC not like 'DK%'),
+	MaDKCC varchar(5) primary key check (MaDKCC like 'DK%'),
 	iMaNhaCC varchar(6) foreign key references NHACUNGCAP(MaNhaCC),
 	iMaLoaiDV varchar(4) foreign key references LOAIDICHVU(MaLoaiDV),
 	iDongXe varchar(15) foreign key references DONGXE(DongXe),
 	iMaMP varchar(4) foreign key references MUCPHI(MaMP),
 	NgayBatDauCungCap date not null,
 	NgayKetThucCungCap date not null,
-	SoLuongXeDangKy int not null check(SoLuongXeDangKy >=0) default 1
+	SoLuongXeDangKy int not null check(SoLuongXeDangKy >=0) default 0
 );
+
+insert into NHACUNGCAP values (N'NCC001',N'Cty TNHH Toàn Pháp',N'Hai Chau',N'05113999888',568941);
+insert into NHACUNGCAP values (N'NCC002',N'Cty Cổ phần Đông Du',N'Lien Chieu',N'05113999889',456789);
+insert into NHACUNGCAP values (N'NCC003',N'Ông Nguyễn Văn A',N'Hoa Thuan',N'05113999890',321456);
+insert into NHACUNGCAP values (N'NCC004',N'Cty Cổ Phần Toàn Cầu Xanh',N'Hai Chau',N'0511365895',513364);
+insert into NHACUNGCAP values (N'NCC005',N'Cty TNHH AMA',N'Thanh Khe',N'05113954685',546546);
+insert into NHACUNGCAP values (N'NCC006',N'Bà Nguyễn Trần Linh',N'Lien Chieu',N'05113912367',524545);
+insert into NHACUNGCAP values (N'NCC007',N'Cty TNHH Phan Thành',N'Thanh Khe',N'05113904389',113021);
+insert into NHACUNGCAP values (N'NCC008',N'Ông Nguyễn Phúc Minh Khôi',N'Hoa Thuan',N'05113909327',121230);
+insert into NHACUNGCAP values (N'NCC009',N'Tập Đoàn Đông Nam Á',N'Lien Chieu',N'05113918290',533654);
+insert into NHACUNGCAP values (N'NCC010',N'Cty Cổ Phần Rạng Đông',N'Lien Chieu',N'05113993021',187864);
+
+insert into LOAIDICHVU values (N'DV01',N'Dịch vụ xe taxi');
+insert into LOAIDICHVU values (N'DV02',N'Dịch vụ xe buýt công cộng theo tuyến cố định');
+insert into LOAIDICHVU values (N'DV03',N'Dịch vụ xe cho thuê theo hợp đồng');
+
+insert into MUCPHI values (N'MP01',10000,N'Áp dụng từ 1/2015');
+insert into MUCPHI values (N'MP02',15000,N'Áp dụng từ 2/2015');
+insert into MUCPHI values (N'MP03',20000,N'Áp dụng từ 3/2016');
+insert into MUCPHI values (N'MP04',25000,N'Áp dụng từ 11/2017');
+
+insert into DONGXE values (N'Hiace',N'Toyota',16);
+insert into DONGXE values (N'Vios',N'Toyota',5);
+insert into DONGXE values (N'Escape',N'Ford',5);
+insert into DONGXE values (N'Cerato',N'KIA',7);
+insert into DONGXE values (N'Forte',N'KIA',5);
+insert into DONGXE values (N'Starex',N'Huyndai',7);
+insert into DONGXE values (N'Grand-i10',N'Huyndai',7);
+
+insert into DANGKYCUNGCAP values (N'DK001',N'NCC001',N'DV01',N'Hiace',N'MP01','2015/11/20','2016/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK002',N'NCC002',N'DV02',N'Hiace',N'MP01','2016/11/20','2017/11/20',3);
+insert into DANGKYCUNGCAP values (N'DK003',N'NCC003',N'DV03',N'Hiace',N'MP01','2015/11/20','2016/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK004',N'NCC001',N'DV01',N'Hiace',N'MP01','2016/11/20','2017/11/20',5);
+insert into DANGKYCUNGCAP values (N'DK005',N'NCC005',N'DV02',N'Hiace',N'MP01','2015/11/20','2016/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK006',N'NCC003',N'DV03',N'Hiace',N'MP01','2016/11/20','2017/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK007',N'NCC001',N'DV01',N'Hiace',N'MP01','2015/11/20','2016/11/20',3);
+insert into DANGKYCUNGCAP values (N'DK008',N'NCC002',N'DV02',N'Hiace',N'MP01','2016/11/20','2017/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK009',N'NCC008',N'DV03',N'Hiace',N'MP01','2015/11/20','2016/11/20',6);
+insert into DANGKYCUNGCAP values (N'DK010',N'NCC001',N'DV01',N'Hiace',N'MP01','2017/11/20','2018/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK011',N'NCC001',N'DV02',N'Hiace',N'MP01','2015/11/20','2016/11/20',7);
+insert into DANGKYCUNGCAP values (N'DK012',N'NCC007',N'DV03',N'Hiace',N'MP01','2015/11/20','2017/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK013',N'NCC009',N'DV01',N'Hiace',N'MP01','2016/11/20','2017/11/20',8);
+insert into DANGKYCUNGCAP values (N'DK014',N'NCC001',N'DV02',N'Hiace',N'MP01','2015/11/20','2016/11/20',9);
+insert into DANGKYCUNGCAP values (N'DK015',N'NCC002',N'DV03',N'Hiace',N'MP01','2015/11/20','2016/11/20',4);
+insert into DANGKYCUNGCAP values (N'DK016',N'NCC010',N'DV01',N'Hiace',N'MP01','2016/11/20','2017/11/20',5);
+insert into DANGKYCUNGCAP values (N'DK017',N'NCC001',N'DV02',N'Hiace',N'MP01','2015/11/20','2016/11/20',8);
+insert into DANGKYCUNGCAP values (N'DK018',N'NCC010',N'DV03',N'Hiace',N'MP01','2016/11/20','2017/11/20',7);
+insert into DANGKYCUNGCAP values (N'DK019',N'NCC003',N'DV01',N'Hiace',N'MP01','2015/11/20','2016/11/20',9);
+insert into DANGKYCUNGCAP values (N'DK020',N'NCC001',N'DV02',N'Hiace',N'MP01','2016/11/20','2017/11/20',6);
+insert into DANGKYCUNGCAP values (N'DK021',N'NCC007',N'DV03',N'Hiace',N'MP01','2015/11/20','2016/11/20',10);
+insert into DANGKYCUNGCAP values (N'DK022',N'NCC003',N'DV01',N'Hiace',N'MP01','2016/11/20','2017/11/20',6);
+insert into DANGKYCUNGCAP values (N'DK023',N'NCC008',N'DV02',N'Hiace',N'MP01','2015/11/20','2016/11/20',8);
+insert into DANGKYCUNGCAP values (N'DK024',N'NCC002',N'DV03',N'Hiace',N'MP01','2017/11/20','2018/11/20',3);
+insert into DANGKYCUNGCAP values (N'DK025',N'NCC003',N'DV01',N'Hiace',N'MP01','2015/11/20','2016/11/20',1);
+
+
+select * from NHACUNGCAP;
+
+select * from DANGKYCUNGCAP;
