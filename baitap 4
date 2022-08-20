@@ -7,7 +7,7 @@ create table PhoneUser(
 create table PhoneSubsc(
 	Type nvarchar(20) not null check(Type like '%Trả trước%' or Type not like '^%Trả sau%'),
 	CreatedDate Date,
-	PhoneNum varchar(15) not null unique check (PhoneNum not like '^%[0-9]%'),
+	PhoneNum varchar(15) primary key not null unique check (PhoneNum not like '^%[0-9]%'),
 );
 
 insert into PhoneUser values (N'Nguyễn Nguyệt Nga','123456789',N'Hà Nội');
