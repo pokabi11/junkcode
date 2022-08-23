@@ -1,0 +1,30 @@
+
+
+--drop table mssql5PhoneNum;
+--drop table mssql5DanhBa;
+
+create table mssql5Danhba(
+	Id int primary key identity(1,1),
+	Name nvarchar(255),
+	Address nvarchar(255),
+	DateOfBirth Date
+);
+
+create table mssql5PhoneNum(
+	PhoneNum varchar(255) primary key check(PhoneNum like '%[0-9]%'),
+	IdDanhba int foreign key references mssql5Danhba(Id),
+); 
+
+--alter table mssql5Danhba
+--	drop column PhoneNums;
+
+select * from mssql5Danhba;
+select * from mssql5PhoneNum;
+
+insert into mssql5Danhba(Name,Address,DateOfBirth) values(N'Nguyễn Văn An',N'123 Nguyễn Trãi, Thanh Xuân, Hà Nội','2001/12/13');
+insert into mssql5Danhba(Name,Address,DateOfBirth) values(N'Nguyễn Văn Bình',N'245 Lê Duẩn, Hoàn Kiếm, Hà Nội','2001/06/30');
+
+insert into mssql5PhoneNum values ('12345678',2),('12345986',2);
+insert into mssql5PhoneNum values ('082943212',1);
+insert into mssql5PhoneNum values ('907226312',1);
+insert into mssql5PhoneNum values ('2198312937',1);
