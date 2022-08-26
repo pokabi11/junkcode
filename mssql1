@@ -1,0 +1,25 @@
+create table Customers(
+Id int primary key not null identity(1,1),
+Name nvarchar(255) not null,
+Address nvarchar(255),
+PhoneNum varchar(16)
+);
+
+create table Orders(
+Id int primary key not null check(Id like '%[0-9]%'),
+CreateDate date,
+IdCustomer int foreign key references Customers(Id),
+IdProduct int foreign key references Products(Id)
+);
+
+create table Products(
+Id int primary key not null,
+Name nvarchar(255) not null,
+Des nvarchar(255) not null,
+Price decimal(16,0)
+);
+--drop table Orders;
+--drop table Products;
+--drop table Customers;
+insert into Customers(Name, Address) values (N'Nguyễn Văn An',N'111 Nguyễn Trãi, Thanh Xuân, Hà Nội');
+insert into Orders(Id,CreateDate) values (123,'2022-09-13');
