@@ -36,7 +36,10 @@ create trigger tg_chkBirthday
 after insert
 as
 begin
-if exists (select * from inserted where (Date-Birthday) < 22)
+if exists (select * from inserted where 22 > (getdate() - Birthday))
+begin
+print 'Age cannot smaller than 22'
+rollback tran
 end
 
 create view V_Epl_Dpm 
@@ -53,5 +56,12 @@ select Id from Department where id =(
 select DepartID from EMployee where EmpCode = @ID
 ))
 
+exec sp_getAllEmp @ID = 'T2204M'
 
+create procedure sp_delDept @ID char(6) as
+delete from Employee where EmpCode = @ID
 
+exec sp_delDept @ID = 'E1'
+
+select * from Employee
+select * from Department
