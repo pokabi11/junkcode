@@ -32,3 +32,26 @@ set Salary = Salary + (Salary*10/100);
 
 alter table Employee add check(Salary > 0);
 
+create trigger tg_chkBirthday
+after insert
+as
+begin
+if exists (select * from inserted where (Date-Birthday) < 22)
+end
+
+create view V_Epl_Dpm 
+as
+select Firstname,LastName,DepartmentName
+from Employee
+as ag1
+join Department
+as fe2 on ag1.DepartID= fe2.Id
+
+alter procedure sp_getAllEmp @ID char(6) as
+select * from Employee where DepartID in (
+select Id from Department where id =(
+select DepartID from EMployee where EmpCode = @ID
+))
+
+
+
